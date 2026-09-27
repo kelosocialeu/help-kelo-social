@@ -79,3 +79,13 @@ function initKeloAssistant() {
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initKeloAssistant, {once:true});
 else initKeloAssistant();
+
+
+function initKeloTranslation(){
+  if(!document.getElementById('google_translate_element')) return;
+  window.googleTranslateElementInit=function(){
+    if(window.google&&google.translate){new google.translate.TranslateElement({pageLanguage:'fr',autoDisplay:false,multilanguagePage:true},'google_translate_element');}
+  };
+  if(!document.querySelector('script[data-kelo-translate]')){const s=document.createElement('script');s.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';s.async=true;s.dataset.keloTranslate='1';document.head.appendChild(s);}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initKeloTranslation,{once:true});else initKeloTranslation();
