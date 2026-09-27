@@ -92,7 +92,7 @@ async function replyContact(req,res){
  if(!key)return send(res,503,{error:"Resend n’est pas configuré sur le serveur."});
  const b=await body(req,12000);
  const to=String(b.email||"").trim().slice(0,200),subject=String(b.subject||"").trim().slice(0,160),message=String(b.message||"").trim().slice(0,8000);
- if(!to||!subject||!message||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(to))return send(res,400,{error:"Destinataire, sujet et message obligatoires."});
+ if(!to||!subject||!message||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to))return send(res,400,{error:"Destinataire, sujet et message obligatoires."});
  const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
  try{
   const r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({from:"Kelo Social <support@kelosocial.eu>",to:[to],subject:subject.startsWith("Re:")?subject:"Re: "+subject,text:message,html:"<div style=\"font-family:Arial,sans-serif;line-height:1.6;color:#101828;white-space:pre-wrap\">"+esc(message)+"</div>",reply_to:"support@kelosocial.eu"})});
