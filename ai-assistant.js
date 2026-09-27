@@ -89,3 +89,11 @@ function initKeloTranslation(){
   if(!document.querySelector('script[data-kelo-translate]')){const s=document.createElement('script');s.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';s.async=true;s.dataset.keloTranslate='1';document.head.appendChild(s);}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initKeloTranslation,{once:true});else initKeloTranslation();
+
+(function fixKeloBranding(){
+  function run(){
+    document.querySelectorAll('img[src="../https://kelosocial.sirv.com/logo.png"]').forEach(img=>{img.src='https://kelosocial.sirv.com/logo.png';});
+    if(!document.querySelector('link[rel="icon"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.href='https://kelosocial.sirv.com/logo.png';document.head.appendChild(l);}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+})();
