@@ -80,7 +80,7 @@ form.onsubmit = async e => {
     addMessage("bot", data.answer);
   } catch (error) {
     loadingNode.remove();
-    addMessage("bot", "Je rencontre actuellement un problème de connexion avec l’assistant. Vous pouvez continuer avec le centre d’aide ou <a href=\"contact.html\">contacter le support</a>.");
+    addMessage("bot", "Je rencontre actuellement un problème de connexion avec l’assistant. Vous pouvez continuer avec le centre d’aide ou consulter https://help.kelosocial.eu/contact.html pour contacter le support.");
     console.error("Assistant Kelo:", error);
   } finally {
     setLoading(false);
