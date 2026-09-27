@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+<title>Kelo Social</title><desc>Logo Kelo Social</desc>
+<defs><linearGradient id="keloGradient" x1="12" y1="12" x2="84" y2="84" gradientUnits="userSpaceOnUse"><stop stop-color="#2563FF"/><stop offset="1" stop-color="#8B5CFF"/></linearGradient></defs>
+<rect width="96" height="96" rx="24" fill="none"/>
+<g fill="none" stroke="url(#keloGradient)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+<path d="M24 25v46"/>
+<path d="M25 48 61 20"/>
+<path d="M25 48 66 76"/>
+</g>
+</svg>
