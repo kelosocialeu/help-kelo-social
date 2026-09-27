@@ -112,8 +112,14 @@ async function admin(req,res,route){
   const b=await body(req,5000),password=String(b.password||"");
   if(!password)return send(res,400,{error:"Mot de passe requis."});
   const r=await sb("/rest/v1/rpc/verify_help_admin_password",{method:"POST",body:JSON.stringify({candidate:password})});
-  const ok=r.ok&&await r.json().catch(()=>false)===true;
-  if(!ok){a.n++;attempts.set(ip,a);return send(res,401,{error:"Mot de passe incorrect."});}
+  const raw=await r.text().catch(()=>"");
+  let value=false;try{value=JSON.parse(raw);}catch{}
+  const ok=r.ok&&(value===true||value===1||value==="true"||(value&&value.verify_help_admin_password===true));
+  if(!ok){
+   a.n++;attempts.set(ip,a);
+   if(!r.ok) console.error("Supabase admin login RPC error:",r.status,raw);
+   return send(res,401,{error:r.ok?"Mot de passe incorrect.":"La vérification du mot de passe admin est indisponible. Vérifiez la configuration Supabase/Render."});
+  }
   a.n=0;attempts.set(ip,a);
   const token=crypto.randomBytes(32).toString("hex");sessions.set(token,Date.now()+28800000);
   return send(res,200,{ok:true},{"Set-Cookie":"kelo_admin="+token+"; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800"});
