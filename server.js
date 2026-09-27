@@ -117,8 +117,9 @@ async function admin(req,res,route){
   const ok=r.ok&&(value===true||value===1||value==="true"||(value&&value.verify_help_admin_password===true));
   if(!ok){
    a.n++;attempts.set(ip,a);
-   if(!r.ok) console.error("Supabase admin login RPC error:",r.status,raw);
-   return send(res,401,{error:r.ok?"Mot de passe incorrect.":"La vérification du mot de passe admin est indisponible. Vérifiez la configuration Supabase/Render."});
+   console.error("Supabase admin login RPC:",r.status,raw);
+   if(!r.ok){if(r.status===404)return send(res,503,{error:"La fonction Supabase verify_help_admin_password est introuvable. Relancez le SQL du fichier supabase-schema.sql dans Supabase."});if(r.status===401||r.status===403)return send(res,503,{error:"La clé Supabase utilisée par Render n’a pas les droits nécessaires. Vérifiez SUPABASE_SECRET_KEY."});return send(res,503,{error:"Supabase refuse la vérification du mot de passe. Vérifiez la fonction SQL et SUPABASE_SECRET_KEY dans Render."});}
+   return send(res,401,{error:"Mot de passe incorrect."});
   }
   a.n=0;attempts.set(ip,a);
   const token=crypto.randomBytes(32).toString("hex");sessions.set(token,Date.now()+28800000);
