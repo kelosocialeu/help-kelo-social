@@ -1,7 +1,51 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Contactez l’équipe Kelo Social depuis le centre d’aide."><link rel="icon" href="assets/kelo-logo.svg" type="image/svg+xml"><title>Nous contacter — Centre d’aide Kelo Social</title><link rel="stylesheet" href="styles.css"></head>
-<body><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/kelo-logo.svg" alt="" class="brand-logo"><span>Kelo Social</span><span class="brand-divider"></span><strong>Centre d’aide</strong></a><nav class="header-nav"><a href="index.html">Centre d’aide</a><a href="https://kelosocial.eu">Kelo Social</a></nav></div></header>
-<main class="form-page"><div class="form-shell"><a class="form-back" href="index.html">← Centre d’aide</a><p class="eyebrow">NOUS CONTACTER</p><h1>Comment pouvons-nous vous aider&nbsp;?</h1><p class="form-lead">Envoyez votre demande à l’équipe Kelo Social. Vous recevrez une réponse à l’adresse e-mail indiquée.</p>
-<form id="contact-form" class="support-form"><label>Nom<input name="name" type="text" maxlength="100" required autocomplete="name"></label><label>Adresse e-mail<input name="email" type="email" maxlength="200" required autocomplete="email"></label><label>Sujet<input name="subject" type="text" maxlength="160" required></label><label>Votre demande<textarea name="message" rows="8" maxlength="5000" required></textarea></label><input name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit" class="primary-button">Envoyer ma demande</button><p id="form-status" class="form-status" role="status"></p></form>
-<div class="contact-note"><strong>Avant de nous écrire</strong><span>Vous pouvez aussi rechercher une réponse dans le centre d’aide ou utiliser l’assistant Kelo.</span></div></div></main>
-<footer><div class="footer-inner"><a class="footer-brand" href="index.html"><img src="assets/kelo-logo.svg" alt=""><span>Kelo Social</span></a><div class="footer-links"><a href="https://kelosocial.eu/terms">Conditions d’utilisation</a><a href="https://kelosocial.eu/privacy">Confidentialité</a></div><span>© 2026 Kelo Social</span></div></footer><script type="module" src="contact.js"></script><script src="ai-assistant.js"></script></body></html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Contactez l’équipe Kelo Social depuis le centre d’aide.">
+<link rel="icon" href="assets/kelo-logo.svg" type="image/svg+xml">
+<title>Nous contacter — Centre d’aide Kelo Social</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html"><img src="assets/kelo-logo.svg" alt="" class="brand-logo"><span>Kelo Social</span><span class="brand-divider"></span><strong>Centre d’aide</strong></a>
+    <nav class="header-nav"><a href="index.html">Centre d’aide</a><a href="https://kelosocial.eu">Kelo Social</a></nav>
+  </div>
+</header>
+<main class="form-page">
+  <div class="form-shell">
+    <a class="form-back" href="index.html">← Centre d’aide</a>
+    <p class="eyebrow">NOUS CONTACTER</p>
+    <h1>Comment pouvons-nous vous aider&nbsp;?</h1>
+    <p class="form-lead">Préparez votre demande et envoyez-la directement à l’équipe Kelo Social par e-mail.</p>
+    <form id="contact-form" class="support-form" action="mailto:support@kelosocial.eu" method="post" enctype="text/plain">
+      <label>Nom<input name="name" type="text" maxlength="100" required autocomplete="name"></label>
+      <label>Adresse e-mail<input name="email" type="email" maxlength="200" required autocomplete="email"></label>
+      <label>Sujet<input name="subject" type="text" maxlength="160" required></label>
+      <label>Votre demande<textarea name="message" rows="8" maxlength="5000" required></textarea></label>
+      <button type="submit" class="primary-button">Ouvrir mon e-mail</button>
+      <p class="form-status" role="status">Votre application e-mail s’ouvrira avec votre demande préremplie.</p>
+    </form>
+    <div class="contact-note"><strong>Avant de nous écrire</strong><span>Vous pouvez aussi rechercher une réponse dans le centre d’aide.</span></div>
+  </div>
+</main>
+<footer><div class="footer-inner"><a class="footer-brand" href="index.html"><img src="assets/kelo-logo.svg" alt=""><span>Kelo Social</span></a><div class="footer-links"><a href="https://kelosocial.eu/terms">Conditions d’utilisation</a><a href="https://kelosocial.eu/privacy">Confidentialité</a></div><span>© 2026 Kelo Social</span></div></footer>
+<script>
+document.querySelector("#contact-form")?.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const data = new FormData(this);
+  const subject = String(data.get("subject") || "").trim();
+  const body = [
+    "Nom : " + String(data.get("name") || "").trim(),
+    "E-mail : " + String(data.get("email") || "").trim(),
+    "",
+    String(data.get("message") || "").trim()
+  ].join("\n");
+  window.location.href = "mailto:support@kelosocial.eu?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
