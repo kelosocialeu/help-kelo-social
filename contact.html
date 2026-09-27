@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Contactez l’équipe Kelo Social depuis le centre d’aide.">
-<link rel="icon" href="https://kelosocial.sirv.com/logo.png" type="image/svg+xml">
+<link rel="icon" href="https://kelosocial.sirv.com/logo.png" type="image/png">
 <title>Nous contacter — Centre d’aide Kelo Social</title>
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,14 +21,24 @@
     <p class="eyebrow">NOUS CONTACTER</p>
     <h1>Comment pouvons-nous vous aider&nbsp;?</h1>
     <p class="form-lead">Envoyez votre demande directement au centre d’aide Kelo Social. Elle sera enregistrée dans la console d’administration.</p>
-    <form id="contact-form" class="support-form" action="mailto:support@kelosocial.eu" method="post" enctype="text/plain">
-      <label>Nom<input name="name" type="text" maxlength="100" required autocomplete="name"></label>
-      <label>Adresse e-mail<input name="email" type="email" maxlength="200" required autocomplete="email"></label>
-      <label>Sujet<input name="subject" type="text" maxlength="160" required></label>
-      <label>Votre demande<textarea name="message" rows="8" maxlength="5000" required></textarea></label>
-      <button type="submit" class="primary-button">Ouvrir mon e-mail</button>
-      <p class="form-status" role="status">Votre application e-mail s’ouvrira avec votre demande préremplie.</p>
+
+    <form id="contact-form" class="support-form" action="/api/contact" method="post">
+      <label>Nom
+        <input name="name" type="text" maxlength="100" required autocomplete="name" autocapitalize="words">
+      </label>
+      <label>Adresse e-mail
+        <input name="email" type="email" maxlength="200" required autocomplete="email" inputmode="email">
+      </label>
+      <label>Sujet
+        <input name="subject" type="text" maxlength="160" required autocomplete="off">
+      </label>
+      <label>Votre demande
+        <textarea name="message" rows="8" maxlength="5000" required autocomplete="off"></textarea>
+      </label>
+      <button type="submit" class="primary-button">Envoyer ma demande</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
     </form>
+
     <div class="contact-note"><strong>Avant de nous écrire</strong><span>Vous pouvez aussi rechercher une réponse dans le centre d’aide.</span></div>
   </div>
 </main>
@@ -38,14 +48,27 @@ document.querySelector("#contact-form")?.addEventListener("submit",async functio
  e.preventDefault();
  const form=this,status=form.querySelector(".form-status"),button=form.querySelector("button");
  const payload=Object.fromEntries(new FormData(form).entries());
- button.disabled=true;status.textContent="Envoi en cours…";status.className="form-status";
+ button.disabled=true;
+ status.textContent="Envoi en cours…";
+ status.className="form-status";
  try{
-  const r=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  const r=await fetch("/api/contact",{
+   method:"POST",
+   headers:{"Content-Type":"application/json","Accept":"application/json"},
+   body:JSON.stringify(payload),
+   credentials:"same-origin"
+  });
   const d=await r.json().catch(()=>({}));
   if(!r.ok)throw new Error(d.error||"Impossible d’envoyer la demande.");
-  form.reset();status.textContent="Votre demande a bien été enregistrée.";status.className="form-status success";
- }catch(err){status.textContent=err.message;status.className="form-status error";}
- finally{button.disabled=false;}
+  form.reset();
+  status.textContent="Votre demande a bien été enregistrée.";
+  status.className="form-status success";
+ }catch(err){
+  status.textContent=err.message;
+  status.className="form-status error";
+ }finally{
+  button.disabled=false;
+ }
 });
 </script>
 </body>
