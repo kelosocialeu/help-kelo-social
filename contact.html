@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Contactez l’équipe Kelo Social depuis le centre d’aide.">
-<link rel="icon" href="https://kelosocial.sirv.com/logo.png" type="image/png">
+<link rel="icon" href="https://kelosocial.sirv.com/logo.png" type="image/png"><link rel="apple-touch-icon" href="https://kelosocial.sirv.com/logo.png">
 <title>Nous contacter — Centre d’aide Kelo Social</title>
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,7 +12,7 @@
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html"><img src="https://kelosocial.sirv.com/logo.png" alt="" class="brand-logo"><span>Kelo Social</span><span class="brand-divider"></span><strong>Centre d’aide</strong></a>
-    <nav class="header-nav"><a href="index.html">Centre d’aide</a><a href="https://kelosocial.eu">Kelo Social</a></nav>
+    <nav class="header-nav"><a href="index.html">Centre d’aide</a><a href="https://kelosocial.eu">Kelo Social</a><div class="language-switcher" aria-label="Choisir la langue"><span class="language-icon">🌐</span><div id="google_translate_element"></div></div></nav>
   </div>
 </header>
 <main class="form-page">
@@ -71,5 +71,5 @@ document.querySelector("#contact-form")?.addEventListener("submit",async functio
  }
 });
 </script>
-</body>
+<script>if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{const s=document.createElement("script");s.src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";s.async=true;window.googleTranslateElementInit=()=>new google.translate.TranslateElement({pageLanguage:"fr",autoDisplay:false},"google_translate_element");document.head.appendChild(s)},{once:true});</script></body>
 </html>
