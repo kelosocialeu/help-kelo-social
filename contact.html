@@ -20,7 +20,7 @@
     <a class="form-back" href="index.html">← Centre d’aide</a>
     <p class="eyebrow">NOUS CONTACTER</p>
     <h1>Comment pouvons-nous vous aider&nbsp;?</h1>
-    <p class="form-lead">Préparez votre demande et envoyez-la directement à l’équipe Kelo Social par e-mail.</p>
+    <p class="form-lead">Envoyez votre demande directement au centre d’aide Kelo Social. Elle sera enregistrée dans la console d’administration.</p>
     <form id="contact-form" class="support-form" action="mailto:support@kelosocial.eu" method="post" enctype="text/plain">
       <label>Nom<input name="name" type="text" maxlength="100" required autocomplete="name"></label>
       <label>Adresse e-mail<input name="email" type="email" maxlength="200" required autocomplete="email"></label>
@@ -34,17 +34,18 @@
 </main>
 <footer><div class="footer-inner"><a class="footer-brand" href="index.html"><img src="https://kelosocial.sirv.com/logo.png" alt=""><span>Kelo Social</span></a><div class="footer-links"><a href="https://kelosocial.eu/terms">Conditions d’utilisation</a><a href="https://kelosocial.eu/privacy">Confidentialité</a></div><span>© 2026 Kelo Social</span></div></footer>
 <script>
-document.querySelector("#contact-form")?.addEventListener("submit", function(e) {
-  e.preventDefault();
-  const data = new FormData(this);
-  const subject = String(data.get("subject") || "").trim();
-  const body = [
-    "Nom : " + String(data.get("name") || "").trim(),
-    "E-mail : " + String(data.get("email") || "").trim(),
-    "",
-    String(data.get("message") || "").trim()
-  ].join("\n");
-  window.location.href = "mailto:support@kelosocial.eu?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+document.querySelector("#contact-form")?.addEventListener("submit",async function(e){
+ e.preventDefault();
+ const form=this,status=form.querySelector(".form-status"),button=form.querySelector("button");
+ const payload=Object.fromEntries(new FormData(form).entries());
+ button.disabled=true;status.textContent="Envoi en cours…";status.className="form-status";
+ try{
+  const r=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.error||"Impossible d’envoyer la demande.");
+  form.reset();status.textContent="Votre demande a bien été enregistrée.";status.className="form-status success";
+ }catch(err){status.textContent=err.message;status.className="form-status error";}
+ finally{button.disabled=false;}
 });
 </script>
 </body>
