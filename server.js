@@ -153,6 +153,10 @@ const mime={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",
 http.createServer(async(req,res)=>{
  try{
   const route=decodeURIComponent((req.url||"/").split("?")[0]);
+  if(route==="/admin"){
+   res.writeHead(302,{Location:"/admin.html", "Cache-Control":"no-store"});
+   return res.end();
+  }
   if(route==="/api/ai")return ai(req,res);
   if(route==="/api/contact")return contact(req,res);
   if(route.startsWith("/api/admin/"))return admin(req,res,route);
