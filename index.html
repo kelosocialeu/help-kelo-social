@@ -1,31 +1,133 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Centre d’aide officiel de Kelo Social. Guides, réponses et conseils pour utiliser Kelo Social.">
+<meta name="theme-color" content="#2563ff">
+<link rel="icon" href="assets/kelo-logo.svg" type="image/svg+xml">
 <title>Centre d’aide — Kelo Social</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="topbar"><div class="wrap nav"><a class="brand" href="#"><span class="logo">K</span><span>Kelo Social</span></a><a class="back" href="https://kelosocial.eu">Retour à Kelo Social ↗</a></div></header>
-<main>
-<section class="hero"><div class="wrap hero-inner">
-<p class="eyebrow">CENTRE D’AIDE</p><h1>Comment pouvons-nous vous aider ?</h1><p class="lead">Trouvez rapidement une réponse sur votre compte, les publications, les paramètres, la sécurité et les fonctionnalités de Kelo Social.</p>
-<div class="search"><span>⌕</span><input id="search" type="search" placeholder="Rechercher dans le centre d’aide…" aria-label="Rechercher"></div>
-</div></section>
-<section class="wrap content">
-<div id="results" class="results" aria-live="polite"></div>
-<div id="categories" class="categories">
-<a class="card" data-search="compte profil connexion inscription déconnexion" href="articles/compte.html"><span class="icon">◎</span><h2>Compte et profil</h2><p>Connexion, profil, identité, photo, handle et déconnexion.</p><span>Voir les articles →</span></a>
-<a class="card" data-search="publications posts réponses commentaires republier feed" href="articles/publications.html"><span class="icon">✦</span><h2>Publications et interactions</h2><p>Publier, répondre, republier, commenter et gérer vos contenus.</p><span>Voir les articles →</span></a>
-<a class="card" data-search="paramètres apparence thème langue traduction algorithme notifications" href="articles/parametres.html"><span class="icon">⚙</span><h2>Paramètres</h2><p>Personnalisez l’apparence, les préférences, les traductions et le fil.</p><span>Voir les articles →</span></a>
-<a class="card" data-search="sécurité confidentialité signaler blocage modération compte" href="articles/securite.html"><span class="icon">◇</span><h2>Sécurité et confidentialité</h2><p>Protégez votre compte, signalez un contenu et gérez vos interactions.</p><span>Voir les articles →</span></a>
-<a class="card" data-search="certification vérification badge humain entreprise association institution média université ai" href="articles/certification.html"><span class="icon">✓</span><h2>Certification et vérification</h2><p>Comprendre les certifications et les badges de vérification.</p><span>Voir les articles →</span></a>
-<a class="card" data-search="pds at protocol identité handle domaine migration" href="articles/at-protocol.html"><span class="icon">◌</span><h2>Kelo Social et AT Protocol</h2><p>Comprendre l’identité, les handles et le fonctionnement du réseau.</p><span>Voir les articles →</span></a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="https://kelosocial.eu" aria-label="Kelo Social">
+      <img src="assets/kelo-logo.svg" alt="" class="brand-logo">
+      <span class="brand-name">Kelo <strong>Social</strong></span>
+      <span class="brand-divider"></span>
+      <span class="brand-section">Centre d’aide</span>
+    </a>
+    <div class="top-actions">
+      <span class="language" aria-label="Langue actuelle">◎&nbsp; FR⌄</span>
+      <a class="back" href="https://kelosocial.eu">Retourner sur Kelo Social ↗</a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Navigation du centre d’aide">
+    <nav>
+      <a class="side-link active" href="#accueil"><span class="side-icon">⌂</span>Accueil</a>
+      <a class="side-link" href="articles/compte.html"><span class="side-icon">◎</span>Compte et profil</a>
+      <a class="side-link" href="articles/publications.html"><span class="side-icon">✎</span>Publications, réponses<br>et commentaires</a>
+      <a class="side-link" href="articles/parametres.html"><span class="side-icon">⚙</span>Paramètres et personnalisation</a>
+      <a class="side-link" href="articles/securite.html"><span class="side-icon">♢</span>Sécurité et confidentialité</a>
+      <a class="side-link" href="articles/certification.html"><span class="side-icon">✓</span>Certification et vérification</a>
+      <a class="side-link" href="articles/at-protocol.html"><span class="side-icon">⌘</span>Kelo Social et AT Protocol</a>
+      <a class="side-link" href="#categories"><span class="side-icon">▣</span>Interface responsive<br>(PC / tablette / mobile)</a>
+    </nav>
+    <div class="sidebar-separator"></div>
+    <nav>
+      <a class="side-link" href="#faq"><span class="side-icon">?</span>FAQ</a>
+      <a class="side-link" href="mailto:support@kelosocial.eu"><span class="side-icon">✉</span>Nous contacter</a>
+    </nav>
+    <div class="support-mini">
+      <img src="assets/kelo-logo.svg" alt="" class="support-logo">
+      <strong>Une question ?</strong>
+      <span>Notre équipe est là pour vous aider.</span>
+      <a href="mailto:support@kelosocial.eu">✉&nbsp; support@kelosocial.eu</a>
+    </div>
+  </aside>
+
+  <main id="accueil">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">CENTRE D’AIDE</p>
+        <h1>Bonjour <span aria-hidden="true">👋</span><br>Comment pouvons-nous<br>vous aider&nbsp;?</h1>
+        <p class="lead">Trouvez rapidement des réponses à vos questions sur Kelo Social. Parcourez nos guides, tutoriels et conseils pour profiter pleinement de votre expérience.</p>
+        <div class="search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="search" type="search" placeholder="Rechercher une aide, un sujet, une fonctionnalité…" aria-label="Rechercher dans le centre d’aide">
+          <button type="button" onclick="document.querySelector('#search').focus()">Rechercher</button>
+        </div>
+      </div>
+      <div class="hero-brand" aria-hidden="true">
+        <img src="assets/kelo-logo.svg" alt="" class="hero-logo">
+        <div class="hero-wordmark"><b>Kelo</b> <strong>Social</strong></div>
+        <p>Ensemble<br>pour un réseau<br>plus humain <span>♡</span></p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div id="results" class="results" aria-live="polite"></div>
+      <div class="section-heading">
+        <div>
+          <h2>Parcourir les catégories</h2>
+          <p>Trouvez la réponse à votre question en explorant nos catégories.</p>
+        </div>
+      </div>
+      <div id="categories" class="categories">
+        <a class="card" data-search="compte profil connexion inscription déconnexion identité photo handle" href="articles/compte.html">
+          <span class="icon icon-blue">◎</span><h3>Compte et profil</h3>
+          <p>Créer votre compte, gérer votre profil, votre photo et vos informations.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" data-search="publications posts réponses commentaires republier feed" href="articles/publications.html">
+          <span class="icon icon-blue">✎</span><h3>Publications, réponses<br>et commentaires</h3>
+          <p>Publier, répondre, commenter, partager et gérer vos contenus.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" data-search="paramètres apparence thème langue traduction algorithme notifications personnalisation" href="articles/parametres.html">
+          <span class="icon icon-teal">⚙</span><h3>Paramètres et personnalisation</h3>
+          <p>Adapter Kelo Social à vos préférences et découvrir toutes vos options disponibles.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" data-search="sécurité confidentialité signaler blocage modération compte" href="articles/securite.html">
+          <span class="icon icon-pink">♢</span><h3>Sécurité et confidentialité</h3>
+          <p>Protéger votre compte, gérer vos données et comprendre nos mesures de sécurité.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" data-search="certification vérification badge humain entreprise association institution média université ai" href="articles/certification.html">
+          <span class="icon icon-blue">✓</span><h3>Certification et vérification</h3>
+          <p>Obtenir et gérer vos badges de vérification et de certification.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" data-search="pds at protocol identité handle domaine migration" href="articles/at-protocol.html">
+          <span class="icon icon-purple">⌘</span><h3>Kelo Social et AT Protocol</h3>
+          <p>Comprendre notre réseau décentralisé et le fonctionnement du protocole AT.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" data-search="responsive pc ordinateur tablette mobile téléphone affichage écran interface" href="#responsive">
+          <span class="icon icon-teal">▣</span><h3>Interface responsive<br>(PC / tablette / mobile)</h3>
+          <p>Profiter d’une expérience optimale sur tous vos appareils.</p><span class="card-arrow">→</span>
+        </a>
+        <a class="card" id="faq" data-search="faq questions fréquentes aide réponses" href="#faq">
+          <span class="icon icon-orange">?</span><h3>FAQ</h3>
+          <p>Les questions les plus fréquentes et leurs réponses rapides.</p><span class="card-arrow">→</span>
+        </a>
+      </div>
+
+      <section class="support-strip">
+        <div class="strip-item"><span class="strip-icon">♢</span><div><strong>Besoin d’aide&nbsp;?</strong><span>Notre équipe de support est disponible pour vous accompagner.</span></div></div>
+        <div class="strip-item"><span class="strip-icon">✉</span><div><strong>support@kelosocial.eu</strong><span>Nous répondons généralement sous 24h.</span></div></div>
+        <div class="strip-item"><span class="strip-icon">↗</span><div><strong>Liens utiles</strong><span><a href="https://kelosocial.eu">Kelo Social</a> · <a href="https://kelosocial.eu/terms">Conditions d’utilisation</a> · <a href="https://kelosocial.eu/privacy">Politique de confidentialité</a></span></div></div>
+      </section>
+    </section>
+  </main>
 </div>
-<section class="contact"><div><p class="eyebrow">BESOIN D’AIDE ?</p><h2>Vous ne trouvez pas votre réponse ?</h2><p>Consultez les informations officielles de Kelo Social ou contactez l’équipe.</p></div><a class="button" href="mailto:support@kelosocial.eu">Contacter le support</a></section>
-</div>
-</main>
-<footer><div class="wrap footer"><span>© Kelo Social</span><nav><a href="https://kelosocial.eu/privacy">Confidentialité</a><a href="https://kelosocial.eu/terms">Conditions</a></nav></div></footer>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-brand" href="https://kelosocial.eu"><img src="assets/kelo-logo.svg" alt=""> <span>Kelo <strong>Social</strong></span></a>
+    <span>© 2026 Kelo Social. Centre d’aide.</span>
+    <span>Un réseau social libre, inclusif et bienveillant. ♡</span>
+  </div>
+</footer>
 <script src="script.js"></script>
-</body></html>
+</body>
+</html>
