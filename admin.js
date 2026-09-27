@@ -14,3 +14,12 @@ async function openThread(b){const p=b.closest(".contact-item").querySelector(".
 async function toggleClose(b){const id=b.dataset.id,closing=b.dataset.status!=="closed";b.disabled=true;try{await api(closing?"/api/admin/contact-close":"/api/admin/contact-reopen",{method:"POST",body:JSON.stringify({id})});await loadContacts()}catch(x){alert(x.message)}finally{b.disabled=false}}
 async function sendReply(b){const item=b.closest(".contact-item"),box=item.querySelector(".reply-box"),s=item.querySelector(".reply-status");if(!box.value.trim())return s.textContent="Écrivez une réponse.";b.disabled=true;s.textContent="Envoi…";try{await api("/api/admin/contact-reply",{method:"POST",body:JSON.stringify({id:b.dataset.id,message:box.value})});box.value="";s.textContent="Réponse envoyée. Le client continuera dans Kelo Social Help.";s.className="form-status success";await openThread(item.querySelector(".open-thread"));loadContacts()}catch(x){s.textContent=x.message;s.className="form-status error"}finally{b.disabled=false}}
 document.addEventListener("click",e=>{const o=e.target.closest(".open-thread"),r=e.target.closest(".send-reply"),c=e.target.closest(".toggle-close");if(o)openThread(o);if(r)sendReply(r);if(c)toggleClose(c)});check();
+(function initAdminTranslation(){
+  function run(){
+    const nav=document.querySelector('.site-header .header-inner'); if(!nav||document.querySelector('.admin-language-switcher')) return;
+    const wrap=document.createElement('div');wrap.className='language-switcher admin-language-switcher';wrap.innerHTML='<span class="language-icon">🌐</span><div id="google_translate_element"></div>';nav.appendChild(wrap);
+    window.googleTranslateElementInit=function(){if(window.google&&google.translate)new google.translate.TranslateElement({pageLanguage:'fr',autoDisplay:false,multilanguagePage:true},'google_translate_element');};
+    const s=document.createElement('script');s.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';s.async=true;document.head.appendChild(s);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+})();
