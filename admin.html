@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Console admin — Kelo Social</title><link rel="stylesheet" href="styles.css"></head>
+<body class="admin-page">
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="https://kelosocial.sirv.com/logo.png" class="brand-logo" alt="Kelo Social"><span>Kelo Social</span><span class="brand-divider"></span><strong>Console d’administration</strong></a><button id="logout" class="secondary-button" hidden>Se déconnecter</button></div></header>
+<main class="admin-main">
+<section id="login-card" class="admin-card"><p class="eyebrow">ACCÈS ADMINISTRATEUR</p><h1>Console d’administration</h1><p>Un seul mot de passe protège cette console.</p><form id="login-form"><label>Mot de passe<input id="password" type="password" autocomplete="current-password" required></label><button class="primary-button" type="submit">Se connecter</button><p id="login-status" class="form-status"></p></form></section>
+<section id="dashboard" hidden>
+<div class="admin-heading"><div><p class="eyebrow">CENTRE D’AIDE</p><h1>Administration</h1><p class="form-lead">Gérez les réponses utilisées par Lexo AI et consultez les demandes de contact.</p></div></div>
+<div class="admin-tabs"><button class="admin-tab active" data-tab="knowledge">Base de connaissances</button><button class="admin-tab" data-tab="contacts">Contacts</button></div>
+<section id="knowledge" class="admin-section">
+<form id="knowledge-form" class="admin-card admin-form"><h2>Ajouter une réponse</h2><label>Titre<input name="title" maxlength="200" required></label><label>Catégorie<input name="category" value="Général" maxlength="80"></label><label>Contenu<textarea name="content" rows="8" maxlength="20000" required></textarea></label><label class="check"><input name="published" type="checkbox" checked> Utiliser cette réponse avec Lexo AI</label><button class="primary-button" type="submit">Ajouter</button><p id="knowledge-status" class="form-status"></p></form>
+<div id="knowledge-list" class="admin-list"></div>
+</section>
+<section id="contacts" class="admin-section" hidden><div id="contact-list" class="admin-list"></div></section>
+</section>
+</main><script src="admin.js"></script></body></html>
