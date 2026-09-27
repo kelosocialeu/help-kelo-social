@@ -16,7 +16,7 @@ function initKeloAssistant() {
   const panel = document.createElement("aside");
   panel.className = "ai-panel";
   panel.setAttribute("aria-label", "Assistant Kelo");
-  panel.innerHTML = '<div class="ai-head"><div><strong>Assistant Kelo</strong><small>Propulsé par Groq · GPT-OSS 120B</small></div><button type="button" aria-label="Fermer">×</button></div><div class="ai-messages"><div class="ai-msg bot">Bonjour ! Je suis l’assistant IA de Kelo Social. Posez-moi votre question sur le compte, les publications, les paramètres, la sécurité, la certification ou l’AT Protocol.</div></div><form class="ai-form"><input placeholder="Posez votre question…" autocomplete="off" maxlength="1000"><button type="submit" aria-label="Envoyer">→</button></form>';
+  panel.innerHTML = '<div class="ai-head"><div><strong>Assistant Kelo</strong><small>Lexo AI · par Kalyx AI</small></div><button type="button" aria-label="Fermer">×</button></div><div class="ai-messages"><div class="ai-msg bot">Bonjour ! Je suis l’assistant IA de Kelo Social. Posez-moi votre question sur le compte, les publications, les paramètres, la sécurité, la certification ou l’AT Protocol.</div></div><form class="ai-form"><input placeholder="Posez votre question…" autocomplete="off" maxlength="1000"><button type="submit" aria-label="Envoyer">→</button></form>';
   document.body.appendChild(panel);
 
   const messagesEl = panel.querySelector(".ai-messages");
