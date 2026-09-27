@@ -1,14 +1,89 @@
-const knowledge=[
-{keys:["compte","profil","handle","@","bio","connexion"],title:"Gérer votre compte",url:"articles/compte.html",text:"Profil, handle, bio, liens et connexion."},
-{keys:["post","publication","publier","commentaire","réponse","réponses","feed","reposter"],title:"Publications et interactions",url:"articles/publications.html",text:"Posts, réponses, commentaires, republications et Feed."},
-{keys:["paramètre","paramètres","thème","couleur","langue","traduction","algorithme","notification"],title:"Paramètres et personnalisation",url:"articles/parametres.html",text:"Apparence, thème, langue, traduction, algorithme et notifications."},
-{keys:["sécurité","confidentialité","bloquer","signalement","modération"],title:"Sécurité et confidentialité",url:"articles/securite.html",text:"Protection du compte, confidentialité et signalements."},
-{keys:["certification","vérification","badge","ia","humain","entreprise"],title:"Certification et vérification",url:"articles/certification.html",text:"Différence entre certification et vérification et types de badges."},
-{keys:["at protocol","atproto","pds","identité","domaine"],title:"Kelo Social et AT Protocol",url:"articles/at-protocol.html",text:"Identité, handles, PDS et fonctionnement de l’AT Protocol."}
-];
-const clean=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-const bubble=document.createElement("button");bubble.className="ai-bubble";bubble.setAttribute("aria-label","Ouvrir l’assistant Kelo");bubble.innerHTML="<span>✦</span><b>Assistant</b>";document.body.appendChild(bubble);
-const panel=document.createElement("aside");panel.className="ai-panel";panel.innerHTML='<div class="ai-head"><div><strong>Assistant Kelo</strong><small>Aide intelligente</small></div><button aria-label="Fermer">×</button></div><div class="ai-messages"><div class="ai-msg bot">Bonjour ! Je peux vous orienter vers les articles du centre d’aide. Que recherchez-vous ?</div></div><form class="ai-form"><input placeholder="Posez votre question…" autocomplete="off"><button>→</button></form>';document.body.appendChild(panel);
-const messages=panel.querySelector(".ai-messages"),form=panel.querySelector(".ai-form"),input=form.querySelector("input");
-bubble.onclick=()=>{panel.classList.toggle("open");if(panel.classList.contains("open"))input.focus()};panel.querySelector(".ai-head button").onclick=()=>panel.classList.remove("open");
-form.onsubmit=e=>{e.preventDefault();const q=input.value.trim();if(!q)return;messages.insertAdjacentHTML("beforeend",'<div class="ai-msg user">'+clean(q)+"</div>");const low=q.toLowerCase();const found=knowledge.filter(x=>x.keys.some(k=>low.includes(k))).slice(0,3);let html;if(found.length)html='<div class="ai-msg bot">Je vous conseille ces ressources :'+found.map(x=>'<a href="'+x.url+'"><b>'+x.title+'</b><small>'+x.text+"</small></a>").join("")+"</div>";else html='<div class="ai-msg bot">Je n’ai pas trouvé d’article correspondant. <a href="contact.html"><b>Contacter le support</b><small>Envoyer une demande à l’équipe Kelo Social.</small></a></div>';messages.insertAdjacentHTML("beforeend",html);input.value="";messages.scrollTop=messages.scrollHeight};
+const SUPABASE_FUNCTION_URL = "https://fbtloeehynqobbwcndru.supabase.co/functions/v1/help-ai";
+
+const clean = s => String(s).replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+}[c]));
+
+const linkify = s => clean(s)
+  .replace(/(https:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>')
+  .replace(/\n/g, "<br>");
+
+const bubble = document.createElement("button");
+bubble.className = "ai-bubble";
+bubble.setAttribute("aria-label", "Ouvrir l’assistant Kelo");
+bubble.innerHTML = "<span>✦</span><b>Assistant IA</b>";
+document.body.appendChild(bubble);
+
+const panel = document.createElement("aside");
+panel.className = "ai-panel";
+panel.innerHTML = '<div class="ai-head"><div><strong>Assistant Kelo</strong><small>Propulsé par Groq · GPT-OSS 120B</small></div><button aria-label="Fermer">×</button></div><div class="ai-messages"><div class="ai-msg bot">Bonjour ! Je suis l’assistant IA de Kelo Social. Posez-moi votre question sur le compte, les publications, les paramètres, la sécurité, la certification ou l’AT Protocol.</div></div><form class="ai-form"><input placeholder="Posez votre question…" autocomplete="off" maxlength="1000"><button aria-label="Envoyer">→</button></form>';
+document.body.appendChild(panel);
+
+const messagesEl = panel.querySelector(".ai-messages");
+const form = panel.querySelector(".ai-form");
+const input = form.querySelector("input");
+const sendButton = form.querySelector("button");
+const history = [];
+
+bubble.onclick = () => {
+  panel.classList.toggle("open");
+  if (panel.classList.contains("open")) input.focus();
+};
+
+panel.querySelector(".ai-head button").onclick = () => panel.classList.remove("open");
+
+function addMessage(role, content) {
+  const node = document.createElement("div");
+  node.className = "ai-msg " + role;
+  node.innerHTML = role === "bot" ? linkify(content) : clean(content);
+  messagesEl.appendChild(node);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function setLoading(loading) {
+  input.disabled = loading;
+  sendButton.disabled = loading;
+  sendButton.textContent = loading ? "…" : "→";
+}
+
+form.onsubmit = async e => {
+  e.preventDefault();
+  const question = input.value.trim();
+  if (!question || input.disabled) return;
+
+  addMessage("user", question);
+  history.push({ role: "user", content: question });
+  input.value = "";
+  setLoading(true);
+
+  const loadingNode = document.createElement("div");
+  loadingNode.className = "ai-msg bot";
+  loadingNode.textContent = "Je réfléchis…";
+  messagesEl.appendChild(loadingNode);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+
+  try {
+    const response = await fetch(SUPABASE_FUNCTION_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history })
+    });
+
+    const data = await response.json().catch(() => ({}));
+    loadingNode.remove();
+
+    if (!response.ok || !data.answer) {
+      throw new Error(data.error || "Réponse indisponible");
+    }
+
+    history.push({ role: "assistant", content: data.answer });
+    addMessage("bot", data.answer);
+  } catch (error) {
+    loadingNode.remove();
+    addMessage("bot", "Je rencontre actuellement un problème de connexion avec l’assistant. Vous pouvez continuer avec le centre d’aide ou <a href=\"contact.html\">contacter le support</a>.");
+    console.error("Assistant Kelo:", error);
+  } finally {
+    setLoading(false);
+    input.focus();
+  }
+};
