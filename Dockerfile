@@ -1,4 +1,7 @@
-FROM nginx:alpine
-COPY . /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:22-alpine
+WORKDIR /app
+COPY package.json ./
+COPY server.js ./
+COPY . /app
+EXPOSE 3000
+CMD ["npm","start"]
